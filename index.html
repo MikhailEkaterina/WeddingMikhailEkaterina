@@ -156,38 +156,42 @@
 
         /* Идеально симметричный блок даты без лишних верхних маргинов */
         .hero-date-block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem; 
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem; /* одинаковый отступ между всеми элементами */
+}
 
-        .hero-month {
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1;
-        }
+.hero-month,
+.hero-date-main,
+.hero-year {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
 
-        .hero-date-main {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3.2rem, 9vw, 4.5rem);
-            font-weight: 400;
-            line-height: 1;
-            color: #ffffff;
-            padding: 0.2rem 0;
-        }
+.hero-month {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-weight: 300;
+    color: rgba(255,255,255,.8);
+}
 
-        .hero-year {
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1;
-        }
+.hero-date-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 9vw, 4.5rem);
+    font-weight: 400;
+    color: #fff;
+}
+
+.hero-year {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 300;
+    color: rgba(255,255,255,.8);
+}
 
         .scroll-down {
             cursor: pointer;
