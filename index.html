@@ -23,17 +23,27 @@
             --card-border: rgba(255, 255, 255, 0.12);
         }
 
-        /* --- Скроллбар как парящий белый блик --- */
+        /* --- Скроллбар как парящий белый блик с неоновым свечением --- */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: transparent; /* Полностью убираем дорожку */
+            background: transparent; /* Полностью убираем дорожку и серые полосы */
         }
         ::-webkit-scrollbar-thumb {
             background: #ffffff;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
+            /* Эффект глубокого светящегося блика */
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 
+                        0 0 15px rgba(255, 255, 255, 0.6), 
+                        0 0 30px rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ffffff;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 1), 
+                        0 0 22px rgba(255, 255, 255, 0.8), 
+                        0 0 40px rgba(255, 255, 255, 0.5);
         }
         
         html {
@@ -44,6 +54,7 @@
             color: var(--text-light);
             background-color: #042925;
             -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
         }
 
         * {
@@ -58,12 +69,12 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 130vh; /* Увеличен запас по высоте */
+            height: 130vh;
             background-image: 
                 linear-gradient(to bottom, rgba(7, 59, 53, 0.55) 0%, rgba(4, 43, 39, 0.72) 40%, rgba(3, 26, 23, 0.9) 100%), 
                 url('https://i.pinimg.com/originals/95/a7/9a/95a79a196f5308c0e6f88e17a936177a.jpg?nii=t');
             background-repeat: no-repeat;
-            background-position: center top; /* Фиксация к верху, чтобы низ не оголялся */
+            background-position: center top;
             background-size: cover;
             z-index: -1;
             transform: translateY(0);
@@ -96,14 +107,15 @@
         }
         
         .hero-content {
-            padding: 3.5rem 1.5rem;
+            padding: 4rem 1.5rem;
             width: 100%;
             max-width: 650px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            min-height: 80dvh;
+            justify-content: center; /* Центрируем всё содержимое */
+            gap: clamp(3rem, 8vh, 5.5rem); /* Равномерные адаптивные отступы между блоками */
+            min-height: 100dvh;
             will-change: opacity;
         }
 
@@ -113,7 +125,6 @@
             letter-spacing: 5px;
             color: rgba(255, 255, 255, 0.75);
             font-weight: 300;
-            margin-bottom: auto;
         }
 
         .wedding-names {
@@ -122,7 +133,6 @@
             align-items: center;
             justify-content: center;
             width: 100%;
-            margin: auto 0;
         }
 
         .wedding-names .name-row {
@@ -139,18 +149,17 @@
             font-family: 'Playfair Display', serif;
             font-size: clamp(2rem, 6vw, 3.5rem);
             color: rgba(255, 255, 255, 0.6);
-            margin: 0.4rem 0;
+            margin: 0.2rem 0;
             font-weight: 300;
             font-style: italic;
         }
 
-        /* Идеально симметричные отступы даты */
+        /* Идеально симметричный блок даты без лишних верхних маргинов */
         .hero-date-block {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: auto;
-            gap: 0.8rem; 
+            gap: 0.5rem; 
         }
 
         .hero-month {
@@ -159,14 +168,16 @@
             letter-spacing: 6px;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.8);
+            line-height: 1;
         }
 
         .hero-date-main {
             font-family: 'Playfair Display', serif;
-            font-size: clamp(2.8rem, 8vw, 4rem);
+            font-size: clamp(3.2rem, 9vw, 4.5rem);
             font-weight: 400;
             line-height: 1;
             color: #ffffff;
+            padding: 0.2rem 0;
         }
 
         .hero-year {
@@ -175,11 +186,14 @@
             letter-spacing: 4px;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.8);
+            line-height: 1;
         }
 
         .scroll-down {
-            margin-top: 2.5rem;
             cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .scroll-down svg {
@@ -974,7 +988,7 @@
                     if (fadeValue > 1) fadeValue = 1;
                     heroContent.style.opacity = fadeValue;
 
-                    // 2. Движение фона — коэффициент 0.05 (двигается аккуратно и плавно)
+                    // 2. Движение фонда — коэффициент 0.05 (двигается аккуратно и плавно)
                     background.style.transform = `translateY(-${top * 0.05}px)`;
 
                     ticked = false;
