@@ -159,41 +159,45 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 0.8rem; 
-        }
+    /* Убираем общий gap, так как настроим отступы точечно */
+}
 
-        .hero-month,
-        .hero-date-main,
-        .hero-year {
-            margin: 0;
-            padding: 0;
-            line-height: 1;
-        }
+.hero-month,
+.hero-date-main,
+.hero-year {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
 
-        .hero-month {
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            font-weight: 300;
-            color: rgba(255,255,255,.8);
-        }
+.hero-month {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-weight: 300;
+    color: rgba(255,255,255,.8);
+    /* Задаем отступ снизу от месяца к числу */
+    margin-bottom: 0.6rem; 
+}
 
-        .hero-date-main {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3.2rem, 9vw, 4.5rem);
-            font-weight: 400;
-            color: #fff;
-        }
+.hero-date-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 9vw, 4.5rem);
+    font-weight: 400;
+    color: #fff;
+    /* Чуть увеличиваем базовую высоту строки, чтобы шрифт «дышал» */
+    line-height: 1.1; 
+}
 
-        .hero-year {
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-weight: 300;
-            color: rgba(255,255,255,.8);
-            margin-top: 2px;
-        }
-
+.hero-year {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 300;
+    color: rgba(255,255,255,.8);
+    /* Задаем отступ сверху от числа к году */
+    margin-top: 0.8rem; 
+}
         .scroll-down {
             cursor: pointer;
             display: flex;
