@@ -66,10 +66,10 @@
         .scroll-line-container {
             position: fixed;
             top: 0;
-            right: 2px; /* Перенесли на самый правый край */
+            right: 2px; 
             width: 2px;
             height: 100vh;
-            background: transparent; /* Сделали саму линию невидимой */
+            background: transparent; 
             z-index: 100;
             pointer-events: none;
         }
@@ -79,7 +79,7 @@
             top: -150px;
             left: 0;
             width: 2px;
-            height: 120px; /* Сделали блик чуть аккуратнее */
+            height: 120px; 
             background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.85), transparent);
             box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
             will-change: transform;
@@ -100,8 +100,8 @@
         /* Появление блоков */
         .reveal {
             opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateY(60px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform, opacity;
         }
 
@@ -112,7 +112,9 @@
 
         /* --- Первый экран --- */
         .hero {
-            position: relative;
+            position: fixed; /* Зафиксировали, чтобы контент плавно уезжал вверх, перекрывая его */
+            top: 0;
+            left: 0;
             height: 100vh;
             width: 100%;
             display: flex;
@@ -120,7 +122,7 @@
             align-items: center;
             text-align: center;
             overflow: hidden;
-            z-index: 2;
+            z-index: 1;
         }
         
         .hero-content {
@@ -131,6 +133,9 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            position: relative;
+            height: 100%;
+            justify-content: center;
             will-change: transform, opacity;
         }
 
@@ -246,6 +251,7 @@
             min-width: 70px;
         }
 
+        /* Перенесли стрелочку внутрь контекста и сделали абсолютное позиционирование снизу */
         .scroll-down {
             position: absolute;
             bottom: 2rem;
@@ -253,6 +259,7 @@
             transform: translateX(-50%);
             cursor: pointer;
             z-index: 3;
+            transition: opacity 0.3s ease;
         }
 
         .scroll-down svg {
@@ -270,6 +277,12 @@
             position: relative;
             z-index: 3;
             width: 100%;
+            background: transparent;
+        }
+
+        /* Гарантирует, что первый блок начнется строго ПОД первым экраном */
+        .main-content section:first-child {
+            margin-top: 100vh;
         }
 
         section {
@@ -674,7 +687,7 @@
             margin-bottom: 1rem;
         }
 
-        /* --- Обновленный аккуратный подвал --- */
+        /* --- Подвал --- */
         .wedding-footer {
             width: 100vw;
             position: relative;
@@ -683,7 +696,7 @@
             margin-left: -50vw;
             margin-right: -50vw;
             border-top: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 2.2rem 1.5rem; /* Сделали уже */
+            padding: 2.2rem 1.5rem; 
             text-align: center;
             background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(12px);
@@ -693,7 +706,7 @@
 
         .footer-text {
             font-family: 'Monsieur La Doulaise', cursive;
-            font-size: clamp(1.8rem, 3.5vw, 2.5rem); /* Слегка уменьшили размер */
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem); 
             color: rgba(255, 255, 255, 0.95);
             line-height: 1.3;
         }
@@ -764,11 +777,13 @@
                 <div class="hero-date-main">04</div>
                 <div class="hero-date-side right">2026</div>
             </div>
-        </div>
-        <div class="scroll-down" onclick="scrollToMain()">
-            <svg viewBox="0 0 24 24">
-                <path d="M7 10l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            
+            <!-- Переместили стрелочку внутрь hero-content, теперь она уходит плавно со всем текстом -->
+            <div class="scroll-down" onclick="scrollToMain()">
+                <svg viewBox="0 0 24 24">
+                    <path d="M7 10l5 5 5-5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
         </div>
     </main>
 
@@ -918,7 +933,6 @@
     </div>
 
     <script>
-        // Твой токен и чат (скрипт автоматически преобразует инвайт-ссылку в нужный формат запроса)
         const TELEGRAM_BOT_TOKEN = '8749864570:AAGNX5Bfdh4Lkdv2d6KTWGvkE7guGmovBZs';
         const TELEGRAM_CHAT_ID = '@_qkHzar4SMMwMGUy'; 
 
@@ -1084,6 +1098,25 @@
             document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
         }
 
+        // Логика плавного автоскролла со старта при первом движении колесика или таче
+        let hasAutoscrolled = false;
+        function autoScrollToContent(e) {
+            if (hasAutoscrolled || window.scrollY > 10) return;
+            
+            // Проверяем направление движения: скролл вниз или жест вверх на мобильном
+            if (e.deltaY > 0 || (e.touches && e.touches[0].clientY < window.innerHeight / 1.5)) {
+                hasAutoscrolled = true;
+                scrollToMain();
+                
+                // Предотвращаем дефолтный резкий прыжок
+                if(e.cancelable) e.preventDefault();
+                
+                // Снимаем слушатели, так как автоскролл нужен только 1 раз при входе
+                window.removeEventListener('wheel', autoScrollToContent);
+                window.removeEventListener('touchmove', autoScrollToContent);
+            }
+        }
+
         function handleScrollEffects() {
             const scrollTop = window.scrollY;
             const windowHeight = window.innerHeight;
@@ -1121,7 +1154,12 @@
             updateTimer();
             init3DParallax();
             setInterval(updateTimer, 1000);
+            
             window.addEventListener('scroll', handleScrollEffects, { passive: true });
+            
+            // Слушатели для мягкого перелистывания со стартового экрана
+            window.addEventListener('wheel', autoScrollToContent, { passive: false });
+            window.addEventListener('touchmove', autoScrollToContent, { passive: false });
         });
     </script>
 </body>
