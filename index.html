@@ -22,21 +22,14 @@
             --text-muted: rgba(255, 255, 255, 0.75);
             --card-bg: rgba(255, 255, 255, 0.05);
             --card-border: rgba(255, 255, 255, 0.12);
-            --transition-smooth: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         html {
             scroll-behavior: smooth;
             font-family: 'Montserrat', sans-serif;
             color: var(--text-light);
-            overflow-x: hidden;
-            -webkit-text-size-adjust: 100%;
             background-color: #042925;
-            scrollbar-width: none;
-        }
-
-        html::-webkit-scrollbar {
-            display: none;
+            -webkit-text-size-adjust: 100%;
         }
 
         * {
@@ -47,10 +40,10 @@
 
         .parallax-bg {
             position: fixed;
-            top: -10%;
-            left: -10%;
-            width: 120%;
-            height: 120%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background-image: 
                 linear-gradient(to bottom, rgba(7, 59, 53, 0.55) 0%, rgba(4, 43, 39, 0.72) 40%, rgba(3, 26, 23, 0.9) 100%), 
                 url('https://i.pinimg.com/originals/95/a7/9a/95a79a196f5308c0e6f88e17a936177a.jpg?nii=t');
@@ -58,12 +51,12 @@
             background-position: center center;
             background-size: cover;
             z-index: -1;
-            will-change: transform;
         }
 
         body {
             min-height: 100vh;
             background: transparent;
+            overflow-x: hidden;
         }
 
         p {
@@ -71,18 +64,6 @@
             line-height: 1.7;
             color: var(--text-muted);
             font-size: clamp(0.95rem, 1vw + 0.5rem, 1.05rem);
-        }
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            will-change: transform, opacity;
-        }
-
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
         }
 
         /* --- Главный Экран --- */
@@ -106,8 +87,6 @@
             align-items: center;
             justify-content: space-between;
             min-height: 80dvh;
-            transition: opacity 0.4s ease, transform 0.4s ease;
-            will-change: transform, opacity;
         }
 
         .hero-top-title {
@@ -161,7 +140,7 @@
             letter-spacing: 6px;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 0.8rem; /* Фиксированный отступ снизу */
+            margin-bottom: 0.8rem;
         }
 
         .hero-date-main {
@@ -170,7 +149,7 @@
             font-weight: 400;
             line-height: 1;
             color: #ffffff;
-            margin-bottom: 0.5rem; /* Фиксированный отступ снизу */
+            margin-bottom: 0.5rem;
         }
 
         .hero-year {
@@ -203,13 +182,13 @@
         }
 
         section {
-            padding: clamp(4rem, 9vw, 7rem) 1.5rem; /* Слегка увеличили отступы между секциями */
+            padding: clamp(4rem, 9vw, 7rem) 1.5rem;
             max-width: 900px;
             margin: 0 auto;
             text-align: center;
         }
 
-        /* Новый расписной элегантный стиль для заголовков */
+        /* Расписной элегантный стиль для заголовков */
         .section-title {
             font-family: 'Great Vibes', cursive;
             font-size: clamp(2.8rem, 7vw, 4.2rem);
@@ -219,7 +198,7 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        /* Интервал между заголовком и основным блоком */
+        /* Оптимальный интервал между заголовками и блоками */
         .section-title + .premium-card,
         .section-title + .timer-container,
         .section-title + .section-subtitle {
@@ -237,7 +216,7 @@
         }
 
         .section-subtitle + .timeline-container {
-            margin-top: 2.2rem; /* Оптимальный интервал для тайминга */
+            margin-top: 2.2rem;
         }
 
         .premium-card {
@@ -250,7 +229,7 @@
             box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
         }
 
-        /* --- Минималистичный Тайминг --- */
+        /* --- Тайминг --- */
         .timeline-container {
             max-width: 600px;
             margin-left: auto;
@@ -295,7 +274,6 @@
             color: #ffffff;
             font-weight: 400;
             line-height: 1.1;
-            text-align: left;
         }
 
         .timeline-space-col {
@@ -336,20 +314,6 @@
             cursor: pointer;
             border-bottom: 1px dashed rgba(255,255,255,0.3);
             padding-bottom: 2px;
-            transition: var(--transition-smooth);
-        }
-
-        .map-selector-trigger:hover {
-            color: #ffffff;
-            border-color: #ffffff;
-        }
-
-        .map-selector-trigger svg {
-            width: 13px;
-            height: 13px;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
         }
 
         .map-options {
@@ -357,7 +321,6 @@
             margin-top: 0.8rem;
             gap: 0.5rem;
             flex-wrap: wrap;
-            animation: fadeIn 0.3s ease forwards;
         }
 
         .map-options.active {
@@ -375,11 +338,6 @@
             color: #ffffff;
             text-decoration: none;
             font-size: 0.8rem;
-            transition: var(--transition-smooth);
-        }
-
-        .map-btn:hover {
-            background: rgba(255, 255, 255, 0.2);
         }
 
         /* --- Таймер --- */
@@ -510,7 +468,6 @@
             color: #ffffff;
             font-family: inherit;
             font-size: 1rem;
-            transition: var(--transition-smooth);
         }
 
         .form-input:focus {
@@ -535,13 +492,6 @@
             background: rgba(0, 0, 0, 0.18);
             padding: 0.9rem 1.1rem;
             border-radius: 8px;
-            border: 1px solid transparent;
-            transition: var(--transition-smooth);
-        }
-
-        .radio-label:hover {
-            background: rgba(255, 255, 255, 0.05);
-            border-color: rgba(255, 255, 255, 0.15);
         }
 
         .radio-label input { display: none; }
@@ -598,7 +548,6 @@
             text-transform: uppercase;
             letter-spacing: 2px;
             cursor: pointer;
-            transition: var(--transition-smooth);
             margin-top: 1rem;
             font-weight: 500;
         }
@@ -612,7 +561,6 @@
             display: none;
             text-align: center;
             padding: 2rem;
-            animation: fadeIn 0.5s ease forwards;
         }
 
         .success-message svg {
@@ -646,11 +594,6 @@
             line-height: 1.3;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
             40% { transform: translateY(-6px); }
@@ -658,21 +601,11 @@
         }
 
         @media (max-width: 500px) {
-            .timeline-line {
-                left: 85px;
-            }
-            .timeline-time-col {
-                width: 70px;
-            }
-            .timeline-space-col {
-                width: 30px;
-            }
+            .timeline-line { left: 85px; }
+            .timeline-time-col { width: 70px; }
+            .timeline-space-col { width: 30px; }
             .timer-container { gap: 0.5rem; }
             .timer-block { padding: 1rem 0.2rem; }
-            .parallax-bg {
-                top: 0; left: 0; width: 100%; height: 100%;
-                background-attachment: scroll;
-            }
         }
     </style>
 </head>
@@ -681,7 +614,7 @@
     <div class="parallax-bg"></div>
 
     <main class="hero">
-        <div class="hero-content" id="heroContent">
+        <div class="hero-content">
             <div class="hero-top-title">Приглашение на свадьбу</div>
             
             <div class="wedding-names">
@@ -690,7 +623,6 @@
                 <span class="name-row">Екатерина</span>
             </div>
             
-            <!-- Исправленный симметричный блок даты -->
             <div class="hero-date-block">
                 <div class="hero-month">Сентябрь</div>
                 <div class="hero-date-main">04</div>
@@ -707,9 +639,8 @@
 
     <div class="main-content" id="mainContent">
 
-        <section class="reveal">
-            <!-- Элегантные каллиграфические заголовки -->
-            <h2 class="section-title" id="timerTitle">До свадьбы осталось</h2>
+        <section>
+            <h2 class="section-title">До свадьбы осталось</h2>
             <div class="timer-container">
                 <div class="timer-block">
                     <span class="timer-val" id="days">00</span>
@@ -730,10 +661,9 @@
             </div>
         </section>
 
-        <section class="reveal">
+        <section>
             <h2 class="section-title">Тайминг</h2>
             <div class="section-subtitle">Расписание торжества</div>
-            
             <div class="timeline-container">
                 <div class="timeline-wrapper">
                     <div class="timeline-line"></div>
@@ -742,7 +672,7 @@
             </div>
         </section>
 
-        <section class="reveal">
+        <section>
             <h2 class="section-title">Дресс-код</h2>
             <div class="premium-card">
                 <p style="margin-bottom: 1.5rem; font-weight: 300;">Будем благодарны, если вы поддержите цветовую гамму нашего праздника.</p>
@@ -763,7 +693,7 @@
             </div>
         </section>
 
-        <section class="reveal">
+        <section>
             <h2 class="section-title">Пожелания</h2>
             <div class="premium-card">
                 <div class="wishes-container">
@@ -775,7 +705,7 @@
             </div>
         </section>
 
-        <section class="reveal" style="padding-bottom: 5rem;">
+        <section style="padding-bottom: 5rem;">
             <h2 class="section-title">Анкета гостя</h2>
             <div class="premium-card">
                 <p style="margin-bottom: 2rem; font-weight: 300; max-width: 550px; margin-left: auto; margin-right: auto;">
@@ -905,13 +835,13 @@
                 if (item.maps && item.maps.zoom) {
                     mapMarkup = `
                         <a href="${item.maps.zoom}" target="_blank" class="map-selector-trigger">
-                            <svg viewBox="0 0 24 24"><path d="M21 6.5L17 10V7c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h13c.55 0 1-.45 1-1v-3l4 3.5c.42.37 1 .07 1-.5v-11c0-.57-.58-.87-1-.5z"/></svg>
+                            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;"><path d="M21 6.5L17 10V7c0-.55-.45-1-1-1H3c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h13c.55 0 1-.45 1-1v-3l4 3.5c.42.37 1 .07 1-.5v-11c0-.57-.58-.87-1-.5z"/></svg>
                             <span>Подключиться к Zoom</span>
                         </a>`;
                 } else if (item.maps) {
                     mapMarkup = `
                         <div class="map-selector-trigger" onclick="toggleMapOptions(${index})">
-                            <svg viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
+                            <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;"><path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6z"/></svg>
                             <span>Открыть в картах</span>
                         </div>
                         <div class="map-options" id="map-options-${index}">
@@ -937,7 +867,6 @@
 
         async function sendForm(data) {
             const safeName = data.guestName.replace(/</g, '<').replace(/>/g, '>');
-            
             let message = `<b>💍 Новая анкета гостя!</b>\n\n`;
             message += `<b>👤 Имя/Фамилия:</b> ${safeName}\n`;
             message += `<b>📅 Присутствие:</b> ${data.attendance}\n`;
@@ -953,7 +882,7 @@
                     parse_mode: 'HTML'
                 })
             });
-            if (!response.ok) throw new Error('Ошибка сети');
+            if (!response.ok) throw new Error('Ошибка');
             return true; 
         }
 
@@ -979,7 +908,7 @@
                 form.style.display = 'none';
                 document.getElementById('successMessage').style.display = 'block';
             }).catch(() => {
-                alert("Произошла ошибка при отправке. Попробуйте еще раз.");
+                alert("Произошла ошибка. Попробуйте еще раз.");
                 submitBtn.innerText = "Отправить";
                 submitBtn.disabled = false;
             });
@@ -988,10 +917,8 @@
         function updateTimer() {
             const now = new Date().getTime();
             let distance = weddingDate - now;
-            const titleEl = document.getElementById('timerTitle');
 
             if (distance < 0) {
-                titleEl.innerText = "Мы в браке...";
                 distance = Math.abs(distance); 
             }
 
@@ -1006,87 +933,14 @@
             document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
         }
 
-        function initEffects() {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if(entry.isIntersecting) entry.target.classList.add('active');
-                });
-            }, { threshold: 0.05 });
-
-            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-        }
-
         function scrollToMain() {
             document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
         }
 
-        let hasAutoscrolled = false;
-        let startY = 0;
-
-        function handleTouchStart(e) {
-            startY = e.touches[0].clientY;
-        }
-
-        function handleTouchMove(e) {
-            if (hasAutoscrolled || window.scrollY > 10) return;
-            const currentY = e.touches[0].clientY;
-            if (startY - currentY > 30) { 
-                hasAutoscrolled = true;
-                scrollToMain();
-                removeScrollListeners();
-            }
-        }
-
-        function handleWheel(e) {
-            if (hasAutoscrolled || window.scrollY > 10) return;
-            if (e.deltaY > 0) {
-                hasAutoscrolled = true;
-                scrollToMain();
-                removeScrollListeners();
-            }
-        }
-
-        function removeScrollListeners() {
-            window.removeEventListener('wheel', handleWheel);
-            window.removeEventListener('touchstart', handleTouchStart);
-            window.removeEventListener('touchmove', handleTouchMove);
-        }
-
-        function handleScrollEffects() {
-            const scrollTop = window.scrollY;
-            const windowHeight = window.innerHeight;
-
-            const heroContent = document.getElementById('heroContent');
-            if (heroContent && scrollTop <= windowHeight) {
-                const progress = scrollTop / (windowHeight * 0.5); 
-                heroContent.style.opacity = Math.max(0, 1 - progress);
-                heroContent.style.transform = `translateY(${scrollTop * 0.4}px)`;
-            }
-        }
-
-        function init3DParallax() {
-            const bg = document.querySelector('.parallax-bg');
-            if (!bg || window.innerWidth <= 500) return;
-
-            window.addEventListener('mousemove', (e) => {
-                const mouseX = e.clientX / window.innerWidth - 0.5;
-                const mouseY = e.clientY / window.innerHeight - 0.5;
-                bg.style.transform = `translate3d(${mouseX * -30}px, ${mouseY * -30}px, 0)`;
-            }, { passive: true });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             renderTimeline();
-            initEffects();
             updateTimer();
-            init3DParallax();
             setInterval(updateTimer, 1000);
-            
-            window.addEventListener('scroll', handleScrollEffects, { passive: true });
-            
-            window.addEventListener('wheel', handleWheel, { passive: true });
-            window.addEventListener('touchstart', handleTouchStart, { passive: true });
-            window.addEventListener('touchmove', handleTouchMove, { passive: true });
         });
     </script>
 </body>
