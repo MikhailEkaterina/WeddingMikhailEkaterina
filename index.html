@@ -160,29 +160,38 @@
         }
 
         .hero-date-block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 0.5rem; 
-        }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Убираем общий gap, теперь управляем отступами вручную */
+    gap: 0; 
+}
 
-        .hero-month {
-            font-size: clamp(0.85rem, 2vw, 1rem);
-            text-transform: uppercase;
-            letter-spacing: 6px;
-            font-weight: 300;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1;
-        }
+.hero-month {
+    font-size: clamp(0.85rem, 2vw, 1rem);
+    text-transform: uppercase;
+    letter-spacing: 6px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1;
+    /* Компенсируем межбуквенный интервал справа, чтобы слово стояло идеально по центру */
+    margin-right: -6px; 
+    /* Принудительно толкаем Сентябрь вниз, ближе к цифрам */
+    margin-bottom: 0.8rem; 
+}
 
-        .hero-date-main {
-            font-family: 'Playfair Display', serif;
-            font-size: clamp(3.2rem, 9vw, 4.5rem);
-            font-weight: 400;
-            line-height: 1;
-            color: #ffffff;
-            padding: 0.2rem 0;
-        }
+.hero-date-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.2rem, 9vw, 4.5rem);
+    font-weight: 400;
+    color: #ffffff;
+    /* Уменьшаем line-height до 0.85, чтобы срезать невидимый потолок шрифта */
+    line-height: 0.85; 
+    /* Убираем старый padding, который ломал симметрию */
+    padding: 0; 
+    /* Аккуратный отступ до года */
+    margin-bottom: 0.6rem; 
+}
 
         .hero-year {
             font-size: clamp(0.85rem, 2vw, 1rem);
