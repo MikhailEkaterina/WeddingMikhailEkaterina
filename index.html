@@ -23,27 +23,22 @@
             --card-border: rgba(255, 255, 255, 0.12);
         }
 
-        /* --- Красивая светящаяся бело-изумрудная полоса прокрутки --- */
+        /* --- Скроллбар как парящий белый блик --- */
         ::-webkit-scrollbar {
-            width: 10px;
+            width: 6px;
         }
         ::-webkit-scrollbar-track {
-            background: #031e1b;
+            background: transparent; /* Полностью убираем дорожку */
         }
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #ffffff 0%, var(--primary-emerald) 100%);
+            background: #ffffff;
             border-radius: 10px;
-            border: 2px solid #031e1b;
-            box-shadow: 0 0 12px rgba(27, 127, 117, 0.8), 0 0 20px rgba(255, 255, 255, 0.5);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(180deg, #ffffff 0%, #24a397 100%);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
         }
         
-        /* Для Firefox */
         html {
             scrollbar-width: thin;
-            scrollbar-color: var(--primary-emerald) #031e1b;
+            scrollbar-color: #ffffff transparent;
             scroll-behavior: smooth;
             font-family: 'Montserrat', sans-serif;
             color: var(--text-light);
@@ -57,12 +52,13 @@
             padding: 0;
         }
 
+        /* Динамичный фон для 3D параллакса */
         .parallax-bg {
             position: fixed;
-            top: 0;
+            top: -10%; /* Запас по высоте для движения вверх/вниз */
             left: 0;
             width: 100%;
-            height: 100%;
+            height: 120%; 
             background-image: 
                 linear-gradient(to bottom, rgba(7, 59, 53, 0.55) 0%, rgba(4, 43, 39, 0.72) 40%, rgba(3, 26, 23, 0.9) 100%), 
                 url('https://i.pinimg.com/originals/95/a7/9a/95a79a196f5308c0e6f88e17a936177a.jpg?nii=t');
@@ -70,6 +66,8 @@
             background-position: center center;
             background-size: cover;
             z-index: -1;
+            transform: translateY(0);
+            will-change: transform;
         }
 
         body {
@@ -106,6 +104,7 @@
             align-items: center;
             justify-content: space-between;
             min-height: 80dvh;
+            will-change: opacity;
         }
 
         .hero-top-title {
@@ -145,12 +144,13 @@
             font-style: italic;
         }
 
-        /* Идеально ровные отступы в дате */
+        /* Идеально симметричные отступы даты */
         .hero-date-block {
             display: flex;
             flex-direction: column;
             align-items: center;
             margin-top: auto;
+            gap: 0.8rem; 
         }
 
         .hero-month {
@@ -159,7 +159,6 @@
             letter-spacing: 6px;
             font-weight: 300;
             color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 0.8rem;
         }
 
         .hero-date-main {
@@ -168,7 +167,6 @@
             font-weight: 400;
             line-height: 1;
             color: #ffffff;
-            margin-bottom: 0.5rem;
         }
 
         .hero-year {
@@ -207,7 +205,6 @@
             text-align: center;
         }
 
-        /* Расписной элегантный стиль для заголовков */
         .section-title {
             font-family: 'Great Vibes', cursive;
             font-size: clamp(2.8rem, 7vw, 4.2rem);
@@ -217,7 +214,6 @@
             text-shadow: 0 2px 10px rgba(0,0,0,0.2);
         }
 
-        /* Оптимальный интервал между заголовками и блоками */
         .section-title + .premium-card,
         .section-title + .timer-container,
         .section-title + .section-subtitle {
@@ -589,7 +585,7 @@
             margin-bottom: 1rem;
         }
 
-        /* --- Исправленный премиум-подвал --- */
+        /* --- Элегантный компактный подвал --- */
         .wedding-footer {
             width: 100vw;
             position: relative;
@@ -597,23 +593,23 @@
             right: 50%;
             margin-left: -50vw;
             margin-right: -50vw;
-            border-top: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 2.2rem 1rem; 
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 1.8rem 1.5rem; 
             text-align: center;
-            background: rgba(0, 0, 0, 0.55);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             box-sizing: border-box;
-            overflow: hidden; /* Предотвращает дергание */
+            overflow: hidden;
         }
 
         .footer-text {
-            font-family: 'Great Vibes', cursive; /* Шрифт как у главных заголовков */
-            font-size: clamp(1.8rem, 6vw, 3rem); /* Плавное сужение под размер экрана */
-            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Great Vibes', cursive; /* Как у заголовков */
+            font-size: clamp(1.3rem, 4vw, 1.8rem); /* Уменьшенный утонченный размер */
+            color: rgba(255, 255, 255, 0.85);
             line-height: 1.2;
-            white-space: nowrap; /* Жесткий запрет на перенос в 2 строки */
-            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            white-space: nowrap; /* Строго одна строка */
+            text-shadow: 0 2px 6px rgba(0,0,0,0.4);
             display: inline-block;
             max-width: 100%;
         }
@@ -635,10 +631,10 @@
 </head>
 <body>
 
-    <div class="parallax-bg"></div>
+    <div class="parallax-bg" id="parallaxBg"></div>
 
     <main class="hero">
-        <div class="hero-content">
+        <div class="hero-content" id="heroContent">
             <div class="hero-top-title">Приглашение на свадьбу</div>
             
             <div class="wedding-names">
@@ -960,6 +956,32 @@
         function scrollToMain() {
             document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
         }
+
+        // --- Обработка скролла: Плавное выцветание Hero и 3D-параллакс фона ---
+        const background = document.getElementById('parallaxBg');
+        const heroContent = document.getElementById('heroContent');
+        let ticked = false;
+
+        window.addEventListener('scroll', () => {
+            if (!ticked) {
+                window.requestAnimationFrame(() => {
+                    const top = window.scrollY;
+                    const screenHeight = window.innerHeight;
+
+                    // 1. Коэффициент выцветания текста (исчезает полностью к концу экрана)
+                    let fadeValue = 1 - (top / (screenHeight * 0.8));
+                    if (fadeValue < 0) fadeValue = 0;
+                    if (fadeValue > 1) fadeValue = 1;
+                    heroContent.style.opacity = fadeValue;
+
+                    // 2. Движение фона (мягкое 3D смещение)
+                    background.style.transform = `translateY(${top * 0.15}px)`;
+
+                    ticked = false;
+                });
+                ticked = true;
+            }
+        });
 
         document.addEventListener('DOMContentLoaded', () => {
             renderTimeline();
