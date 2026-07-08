@@ -23,32 +23,9 @@
             --card-border: rgba(255, 255, 255, 0.12);
         }
 
-        /* --- Скроллбар как парящий белый блик с неоновым свечением --- */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent; /* Полностью убираем дорожку и серые полосы */
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #ffffff;
-            border-radius: 10px;
-            /* Эффект глубокого светящегося блика */
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.9), 
-                        0 0 15px rgba(255, 255, 255, 0.6), 
-                        0 0 30px rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ffffff;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 1), 
-                        0 0 22px rgba(255, 255, 255, 0.8), 
-                        0 0 40px rgba(255, 255, 255, 0.5);
-        }
-        
+        /* Шаг 1. Полное скрытие стандартного скроллбара */
         html {
-            scrollbar-width: thin;
-            scrollbar-color: #ffffff transparent;
+            scrollbar-width: none; /* Для Firefox */
             scroll-behavior: smooth;
             font-family: 'Montserrat', sans-serif;
             color: var(--text-light);
@@ -57,13 +34,41 @@
             overflow-x: hidden;
         }
 
+        html::-webkit-scrollbar {
+            display: none; /* Для Chrome, Safari, Edge и Opera */
+        }
+
+        /* Шаг 2. Каркас для кастомного скроллбара-блика */
+        .scroll-line-container {
+            position: fixed;
+            top: 0;
+            right: 2px; 
+            width: 2px;
+            height: 100vh;
+            background: transparent; 
+            z-index: 100;
+            pointer-events: none; 
+        }
+
+        .scroll-line-flare {
+            position: absolute;
+            top: 0; /* JS будет управлять смещением через translateY */
+            left: 0;
+            width: 2px;
+            height: 120px; 
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.85), transparent);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6), 0 0 20px rgba(255, 255, 255, 0.3);
+            will-change: transform; 
+            transform: translateY(-150px); /* Стартовая позиция скрыта */
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
 
-        /* Динамичный фон для 3D параллакса с защитой от пустых зон */
+        /* Динамичный фон для 3D параллакса */
         .parallax-bg {
             position: fixed;
             top: 0;
@@ -113,8 +118,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center; /* Центрируем всё содержимое */
-            gap: clamp(3rem, 8vh, 5.5rem); /* Равномерные адаптивные отступы между блоками */
+            justify-content: center;
+            gap: clamp(3rem, 8vh, 5.5rem);
             min-height: 100dvh;
             will-change: opacity;
         }
@@ -154,50 +159,40 @@
             font-style: italic;
         }
 
-       
         .hero-date-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Убираем общий gap, так как настроим отступы точечно */
-}
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem; 
+        }
 
-.hero-month,
-.hero-date-main,
-.hero-year {
-    margin: 0;
-    padding: 0;
-    line-height: 1;
-}
+        .hero-month {
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1;
+        }
 
-.hero-month {
-    font-size: clamp(0.85rem, 2vw, 1rem);
-    text-transform: uppercase;
-    letter-spacing: 6px;
-    font-weight: 300;
-    color: rgba(255,255,255,.8);
-    /* Задаем отступ снизу от месяца к числу */
-    margin-bottom: 0.6rem; 
-}
+        .hero-date-main {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3.2rem, 9vw, 4.5rem);
+            font-weight: 400;
+            line-height: 1;
+            color: #ffffff;
+            padding: 0.2rem 0;
+        }
 
-.hero-date-main {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3.2rem, 9vw, 4.5rem);
-    font-weight: 400;
-    color: #fff;
-    /* Чуть увеличиваем базовую высоту строки, чтобы шрифт «дышал» */
-    line-height: 1.1; 
-}
+        .hero-year {
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            font-weight: 300;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1;
+        }
 
-.hero-year {
-    font-size: clamp(0.85rem, 2vw, 1rem);
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    font-weight: 300;
-    color: rgba(255,255,255,.8);
-    /* Задаем отступ сверху от числа к году */
-    margin-top: 0.8rem; 
-}
         .scroll-down {
             cursor: pointer;
             display: flex;
@@ -654,6 +649,10 @@
 </head>
 <body>
 
+    <div class="scroll-line-container">
+        <div class="scroll-line-flare" id="scrollFlare"></div>
+    </div>
+
     <div class="parallax-bg" id="parallaxBg"></div>
 
     <main class="hero">
@@ -980,9 +979,10 @@
             document.getElementById('mainContent').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // --- Обработка скролла: Плавное выцветание Hero и МЕДЛЕННЫЙ 3D-параллакс ---
+        // --- Обработка скролла: Плавное выцветание Hero, МЕДЛЕННЫЙ 3D-параллакс и Оживление Блика ---
         const background = document.getElementById('parallaxBg');
         const heroContent = document.getElementById('heroContent');
+        const flare = document.getElementById('scrollFlare');
         let ticked = false;
 
         window.addEventListener('scroll', () => {
@@ -990,15 +990,24 @@
                 window.requestAnimationFrame(() => {
                     const top = window.scrollY;
                     const screenHeight = window.innerHeight;
+                    const docHeight = document.documentElement.scrollHeight - screenHeight;
 
-                    // 1. Коэффициент выцветания текста
+                    // 1. Коэффициент выцветания текста первого экрана
                     let fadeValue = 1 - (top / (screenHeight * 0.8));
                     if (fadeValue < 0) fadeValue = 0;
                     if (fadeValue > 1) fadeValue = 1;
                     heroContent.style.opacity = fadeValue;
 
-                    // 2. Движение фонда — коэффициент 0.05 (двигается аккуратно и плавно)
+                    // 2. Движение фона (3D-параллакс)
                     background.style.transform = `translateY(-${top * 0.05}px)`;
+
+                    // 3. Шаг 3. Оживление кастомного блика
+                    if (flare && docHeight > 0) {
+                        const scrollPercent = top / docHeight;
+                        // Смещение блика с учетом отступов сверху и снизу страницы
+                        const flareY = scrollPercent * (screenHeight + 200) - 100;
+                        flare.style.transform = `translateY(${flareY}px)`;
+                    }
 
                     ticked = false;
                 });
